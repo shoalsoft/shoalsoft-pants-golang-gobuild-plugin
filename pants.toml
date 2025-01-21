@@ -1,0 +1,76 @@
+[GLOBAL]
+pants_version = "2.23.0rc0"
+backend_packages.add = [
+  "pants.backend.python",
+  "pants.backend.python.lint.autoflake",
+  "pants.backend.python.lint.black",
+  "pants.backend.python.lint.docformatter",
+  "pants.backend.python.lint.flake8",
+  "pants.backend.python.lint.isort",
+  "pants.backend.python.typecheck.mypy",
+  "pants.backend.build_files.fix.deprecations",
+  "pants.backend.build_files.fmt.black",
+  "pants.backend.plugin_development",
+]
+
+[source]
+root_patterns = [
+  "/src/python",
+  "/build-support/flake8",
+]
+
+[anonymous-telemetry]
+enabled = false
+
+[python]
+enable_resolves = true
+interpreter_constraints = ["==3.9.*"]
+pip_version = "latest"
+
+[python.resolves]
+python-default = "3rdparty/python/default.lock"
+flake8 = "3rdparty/python/flake8.lock"
+mypy = "3rdparty/python/mypy.lock"
+pytest = "3rdparty/python/pytest.lock"
+
+[python-infer]
+assets = true
+unowned_dependency_behavior = "error"
+
+[docformatter]
+args = ["--wrap-summaries=100", "--wrap-descriptions=100"]
+
+[flake8]
+config = "build-support/flake8/.flake8"
+source_plugins = ["build-support/flake8"]
+install_from_resolve = "flake8"
+requirements = ["//3rdparty/python:flake8"]
+
+[pytest]
+args = ["--no-header", "-vv"]
+install_from_resolve = "pytest"
+requirements = ["//3rdparty/python:pytest"]
+
+[mypy]
+install_from_resolve = "mypy"
+requirements = ["//3rdparty/python:mypy"]
+
+[test]
+extra_env_vars = [
+  # TODO: These are exposed to tests in order to allow for python interpreter discovery when
+  # Pants-tests-Pants: in particular, the [python] subsystem consumes them.
+  #   see https://github.com/pantsbuild/pants/issues/11638
+  "PYENV_ROOT",
+  "HOME",
+  "PATH",
+  # We'd always like complete backtraces in tests.
+  "RUST_BACKTRACE=1",
+]
+timeout_default = 60
+
+[update-build-files]
+# We use `pants.backend.build_files.fmt.black`
+fmt = false
+
+
+

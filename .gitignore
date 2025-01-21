@@ -1,0 +1,6 @@
+# Pants directories
+/.pants.d
+/dist
+
+# VSCode files
+*.code*
