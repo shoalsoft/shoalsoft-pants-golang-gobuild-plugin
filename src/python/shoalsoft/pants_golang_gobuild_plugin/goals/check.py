@@ -14,9 +14,9 @@ from pants.engine.rules import Get, collect_rules, concurrently, rule
 from pants.engine.target import FieldSet
 from pants.engine.unions import UnionRule
 from pants.util.logging import LogLevel
-from shoalsoft.pants_golang_official_plugin.target_types import GoModSourceField
-from shoalsoft.pants_golang_official_plugin.util_rules import goroot
-from shoalsoft.pants_golang_official_plugin.util_rules.goroot import GoRoot
+from shoalsoft.pants_golang_gobuild_plugin.target_types import GoModSourceField
+from shoalsoft.pants_golang_gobuild_plugin.util_rules import goroot
+from shoalsoft.pants_golang_gobuild_plugin.util_rules.goroot import GoRoot
 
 
 @dataclass(frozen=True)

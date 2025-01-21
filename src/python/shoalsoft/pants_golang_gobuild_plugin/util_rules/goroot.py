@@ -19,9 +19,9 @@ from pants.engine.rules import collect_rules, rule
 from pants.util.frozendict import FrozenDict
 from pants.util.logging import LogLevel
 from pants.util.strutil import bullet_list, softwrap
-from shoalsoft.pants_golang_official_plugin.subsystems.golang import GolangSubsystem
-from shoalsoft.pants_golang_official_plugin.util_rules import go_bootstrap
-from shoalsoft.pants_golang_official_plugin.util_rules.go_bootstrap import (
+from shoalsoft.pants_golang_gobuild_plugin.subsystems.golang import GolangSubsystem
+from shoalsoft.pants_golang_gobuild_plugin.util_rules import go_bootstrap
+from shoalsoft.pants_golang_gobuild_plugin.util_rules.go_bootstrap import (
     GoBootstrap,
     compatible_go_version,
 )

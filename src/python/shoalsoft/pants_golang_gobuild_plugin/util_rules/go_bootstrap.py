@@ -12,7 +12,7 @@ from pants.engine.env_vars import PathEnvironmentVariable
 from pants.engine.internals.selectors import Get
 from pants.engine.rules import collect_rules, rule
 from pants.util.ordered_set import FrozenOrderedSet
-from shoalsoft.pants_golang_official_plugin.subsystems.golang import GolangSubsystem
+from shoalsoft.pants_golang_gobuild_plugin.subsystems.golang import GolangSubsystem
 
 logger = logging.getLogger(__name__)
 

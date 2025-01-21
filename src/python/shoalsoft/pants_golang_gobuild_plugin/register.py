@@ -1,9 +1,9 @@
 # Pants Plugin to invoke Official Go toolchain.
 # Copyright (C) 2024 Shoal Software LLC. All rights reserved.
 
-from shoalsoft.pants_golang_official_plugin.goals import check
-from shoalsoft.pants_golang_official_plugin.target_types import GoModuleTarget
-from shoalsoft.pants_golang_official_plugin.util_rules import go_bootstrap, goroot
+from shoalsoft.pants_golang_gobuild_plugin.goals import check
+from shoalsoft.pants_golang_gobuild_plugin.target_types import GoModuleTarget
+from shoalsoft.pants_golang_gobuild_plugin.util_rules import go_bootstrap, goroot
 
 
 def target_types():

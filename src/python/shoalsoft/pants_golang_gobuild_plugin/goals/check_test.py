@@ -9,12 +9,12 @@ import pytest
 from pants.core.goals.check import CheckResults
 from pants.engine.internals.native_engine import Address
 from pants.testutil.rule_runner import QueryRule, RuleRunner
-from shoalsoft.pants_golang_official_plugin.goals.check import (
+from shoalsoft.pants_golang_gobuild_plugin.goals.check import (
     GoCheckModuleFieldSet,
     GoCheckModuleRequest,
 )
-from shoalsoft.pants_golang_official_plugin.register import rules as all_rules
-from shoalsoft.pants_golang_official_plugin.register import target_types
+from shoalsoft.pants_golang_gobuild_plugin.register import rules as all_rules
+from shoalsoft.pants_golang_gobuild_plugin.register import target_types
 
 
 @pytest.fixture

@@ -12,9 +12,9 @@ from pants.engine.internals.scheduler import ExecutionError
 from pants.engine.rules import QueryRule
 from pants.testutil.rule_runner import RuleRunner
 from pants.util.contextutil import temporary_dir
-from shoalsoft.pants_golang_official_plugin.util_rules.goroot import GoRoot
-from shoalsoft.pants_golang_official_plugin.util_rules.goroot import rules as goroot_rules
-from shoalsoft.pants_golang_official_plugin.util_rules.testutil import (
+from shoalsoft.pants_golang_gobuild_plugin.util_rules.goroot import GoRoot
+from shoalsoft.pants_golang_gobuild_plugin.util_rules.goroot import rules as goroot_rules
+from shoalsoft.pants_golang_gobuild_plugin.util_rules.testutil import (
     EXPECTED_VERSION,
     EXPECTED_VERSION_NEXT_RELEASE,
     mock_go_binary,
