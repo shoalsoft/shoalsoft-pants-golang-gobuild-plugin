@@ -1,0 +1,35 @@
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+
+jobs:
+  lint_and_test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python 3.11.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize Pants launcher
+        uses: pantsbuild/actions/init-pants@56efcdb79721bc7726edf542e324468033e4e21c
+        with:
+          # cache0 makes it easy to bust the cache if needed
+          gha-cache-key: cache0-py3.11
+          named-caches-hash: ${{ hashFiles('3rdparty/python/pants-2.26.lock') }}
+      - name: Lint and typecheck the code
+        run: "pants lint check ::"
+      - name: Run tests
+        run: "pants test ::"
+      # - name: Package plugin as PEX for various Pants versions.
+      #   run: |
+      #     pants package src/python/shoalsoft/pants_telemetry_plugin::
+      #     for pants_version in 2.25 2.24 2.23 2.21; do
+      #       if [ ! -r dist/shoalsoft-pants-telemetry-plugin-pants${pants_version}-*.pex ]; then
+      #         echo "ERROR: No PEX file found for plugin for Pants version $pants_version." 1>&2
+      #         exit 1
+      #       fi
+      #     done
