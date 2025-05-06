@@ -1,6 +1,12 @@
-python_requirements()
-
-pants_requirements(name="pants")
+python_requirements(
+    name="pants-2.26",
+    source="pants-2.26.txt",
+    resolve="pants-2.26",
+    module_mapping={
+        "pantsbuild.pants": ["pants"],
+        "pantsbuild.pants.testutil": ["pants.testutil"],
+    },
+)
 
 python_requirements(
     name="flake8",

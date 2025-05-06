@@ -1,5 +1,5 @@
 [GLOBAL]
-pants_version = "2.23.1"
+pants_version = "2.26.0"
 backend_packages.add = [
   "pants.backend.python",
   "pants.backend.python.lint.autoflake",
@@ -24,11 +24,14 @@ enabled = false
 
 [python]
 enable_resolves = true
-interpreter_constraints = ["==3.9.*"]
-pip_version = "latest"
+interpreter_constraints = ["==3.11.*"]
+pip_version = "25.0"
+
+[python-repos]
+find_links = ["https://wheels.pantsbuild.org/simple"]
 
 [python.resolves]
-python-default = "3rdparty/python/default.lock"
+"pants-2.26" = "3rdparty/python/pants-2.26.lock"
 flake8 = "3rdparty/python/flake8.lock"
 mypy = "3rdparty/python/mypy.lock"
 pytest = "3rdparty/python/pytest.lock"
