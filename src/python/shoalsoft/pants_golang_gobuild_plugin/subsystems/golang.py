@@ -1,7 +1,7 @@
 # Pants Plugin to invoke Official Go toolchain.
 # Copyright (C) 2024 Shoal Software LLC. All rights reserved.
 
-from pants.option.option_types import StrListOption, StrOption
+from pants.option.option_types import BoolOption, StrListOption, StrOption
 from pants.option.subsystem import Subsystem
 from pants.util.strutil import softwrap
 
@@ -48,4 +48,35 @@ class GolangSubsystem(Subsystem):
             Do not include the patch version.
             """
         ),
+    )
+
+    tailor_go_mod_targets = BoolOption(
+        default=True,
+        help=softwrap(
+            """
+            If true, add a `go_mod` target with the `tailor` goal wherever there is a
+            `go.mod` file.
+            """
+        ),
+        advanced=True,
+    )
+    tailor_package_targets = BoolOption(
+        default=True,
+        help=softwrap(
+            """
+            If true, add a `go_package` target with the `tailor` goal in every directory with a
+            `.go` file.
+            """
+        ),
+        advanced=True,
+    )
+    tailor_binary_targets = BoolOption(
+        default=True,
+        help=softwrap(
+            """
+            If true, add a `go_binary` target with the `tailor` goal in every directory with a
+            `.go` file with `package main`.
+            """
+        ),
+        advanced=True,
     )
