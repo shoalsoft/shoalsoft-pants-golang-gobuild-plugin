@@ -7,9 +7,8 @@ from dataclasses import dataclass
 from typing import Collection
 
 from pants.core.util_rules import search_paths
-from pants.core.util_rules.search_paths import ValidatedSearchPaths, ValidateSearchPathsRequest
+from pants.core.util_rules.search_paths import ValidateSearchPathsRequest, validate_search_paths
 from pants.engine.env_vars import PathEnvironmentVariable
-from pants.engine.internals.selectors import Get
 from pants.engine.rules import collect_rules, rule
 from pants.util.ordered_set import FrozenOrderedSet
 from shoalsoft.pants_golang_gobuild_plugin.subsystems.golang import GolangSubsystem
@@ -24,12 +23,13 @@ class GoBootstrap:
 
 async def _go_search_paths(
     paths: Collection[str],
+    *,
+    path_env_var: PathEnvironmentVariable,
 ) -> tuple[str, ...]:
-    path_variables = await Get(PathEnvironmentVariable)
     expanded: list[str] = []
     for s in paths:
         if s == "<PATH>":
-            expanded.extend(path_variables)
+            expanded.extend(path_env_var)
         else:
             expanded.append(s)
     return tuple(expanded)
@@ -39,9 +39,9 @@ async def _go_search_paths(
 async def resolve_go_bootstrap(
     golang_subsystem: GolangSubsystem,
     golang_env_aware: GolangSubsystem.EnvironmentAware,
+    path_env_var: PathEnvironmentVariable,
 ) -> GoBootstrap:
-    search_paths = await Get(
-        ValidatedSearchPaths,
+    search_paths = await validate_search_paths(
         ValidateSearchPathsRequest(
             env_tgt=golang_env_aware.env_tgt,
             search_paths=tuple(golang_env_aware.raw_go_search_paths),
@@ -49,9 +49,9 @@ async def resolve_go_bootstrap(
             environment_key="golang_go_search_paths",
             is_default=golang_env_aware._is_default("_go_search_paths"),
             local_only=FrozenOrderedSet(),
-        ),
+        )
     )
-    paths = await _go_search_paths(search_paths)
+    paths = await _go_search_paths(search_paths, path_env_var=path_env_var)
 
     return GoBootstrap(go_search_paths=paths)
 
