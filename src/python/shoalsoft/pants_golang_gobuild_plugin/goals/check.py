@@ -7,10 +7,11 @@ from dataclasses import dataclass
 
 from pants.core.goals.check import CheckRequest, CheckResult, CheckResults
 from pants.engine.env_vars import EnvironmentVars, EnvironmentVarsRequest
+from pants.engine.internals.platform_rules import environment_vars_subset
 from pants.engine.intrinsics import execute_process
 from pants.engine.platform import Platform
 from pants.engine.process import Process, ProcessCacheScope, ProcessExecutionEnvironment
-from pants.engine.rules import Get, collect_rules, concurrently, rule
+from pants.engine.rules import collect_rules, concurrently, implicitly, rule
 from pants.engine.target import FieldSet
 from pants.engine.unions import UnionRule
 from pants.util.logging import LogLevel
@@ -57,8 +58,8 @@ async def check_go_module(
         execute_in_workspace=True,
     )
 
-    env_vars = await Get(
-        EnvironmentVars, EnvironmentVarsRequest(["PATH", "HOME"], allowed=["PATH", "HOME"])
+    env_vars = await environment_vars_subset(
+        **implicitly(EnvironmentVarsRequest(["PATH", "HOME"], allowed=["PATH", "HOME"]))
     )
 
     processes = [
